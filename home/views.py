@@ -23,3 +23,9 @@ def fetch_cards(request):
     cards = Card.objects.all()
 
     return render(request, 'cards.html', {'cards': cards})
+
+
+def fetch_commander_cards():
+    # Fetching legendary creature cards
+    commanders = Card.where(supertypes='legendary').where(types='creature').all()
+    return commanders
