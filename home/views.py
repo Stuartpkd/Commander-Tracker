@@ -5,6 +5,13 @@ from django.core.cache import cache
 from asgiref.sync import sync_to_async
 
 
+def index(request):
+    context = {
+        'commanders': []
+    }
+    return render(request, 'index.html', context)
+
+
 async def async_fetch_mtg_cards():
     url = 'https://api.magicthegathering.io/v1/cards?supertypes=legendary&types=creature'
     async with aiohttp.ClientSession() as session:
