@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import Card
 from django.core.cache import cache
 from asgiref.sync import sync_to_async
+import random
 
 
 def index(request):
@@ -10,6 +11,7 @@ def index(request):
         'commanders': []
     }
     return render(request, 'home/index.html', context)
+
 
 
 async def async_fetch_mtg_cards():
@@ -22,6 +24,7 @@ async def async_fetch_mtg_cards():
             else:
                 return []
 
+
 async def fetch_legendary_creatures(request):
     commanders = cache.get('commanders')
     if not commanders:
@@ -31,6 +34,7 @@ async def fetch_legendary_creatures(request):
         cache.set('commanders', commanders, timeout=3600)
 
     return render(request, 'commanders.html', {'commanders': commanders})
+
 
 async def process_card(card_data):
     card, created = await sync_to_async(Card.objects.get_or_create)(

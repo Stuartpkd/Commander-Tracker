@@ -18,7 +18,8 @@
         </div>
       </div>
     </div>
-    {% endfor %}
+    {% if forloop.counter|divisibleby:3 %} {# Start a new row every 3 cards #}
   </div>
+  <div class="row">{% endif %} {% endfor %}</div>
 </div>
 {% endblock %}
