@@ -1,9 +1,9 @@
+# urls.py
+
 from django.urls import path
-from . import views
-from .views import commanders_view
+from .views import fetch_legendary_creatures
 
 urlpatterns = [
-    # ... other url patterns ...
-    path('cards/', views.fetch_cards, name='fetch-cards'),
-    path('commanders/', commanders_view, name='commanders'),
+    # ... other URL patterns ...
+    path('commanders/', fetch_legendary_creatures, name='commanders'),
 ]
