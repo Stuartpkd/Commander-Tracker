@@ -72,13 +72,13 @@
 
               <!-- Commander Page Link -->
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'commander' %}">Commander</a>
+                <a class="nav-link" href="#">Commander</a>
               </li>
 
               <!-- Profile Page Link (Check Authentication) -->
               {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-link" href="#">Profile</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
