@@ -9,7 +9,7 @@ def index(request):
     context = {
         'commanders': []
     }
-    return render(request, 'index.html', context)
+    return render(request, 'home/index.html', context)
 
 
 async def async_fetch_mtg_cards():
