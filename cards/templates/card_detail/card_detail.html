@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h1>{{ card.name }}</h1>
+
+  <!-- Display Card Details -->
+  <p>Mana Cost: {{ card.mana_cost }}</p>
+  <p>Type: {{ card.type_line }}</p>
+  <p>Text: {{ card.oracle_text }}</p>
+  <!-- Add more details as needed -->
+
+  <!-- Image if available -->
+  {% if card.image_url %}
+  <img src="{{ card.image_url }}" alt="{{ card.name }}" />
+  {% endif %}
+</div>
+{% endblock %}
