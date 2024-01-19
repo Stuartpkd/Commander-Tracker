@@ -6,4 +6,4 @@ from django.contrib.auth.decorators import login_required
 def user_profile(request):
 
     context = {'user': request.user}
-    return render(request, 'profiles/templates/profile.html', context)
+    return render(request, 'profiles/profiles.html', context)
