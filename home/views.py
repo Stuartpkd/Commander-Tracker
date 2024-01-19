@@ -1,14 +1,14 @@
-import aiohttp
+import requests
 from django.shortcuts import render
 from .models import Card
-from django.core.cache import cache
-from asgiref.sync import sync_to_async
 import random
 
-
 def index(request):
+    random_commanders = fetch_random_mtg_cards()
+    processed_commanders = [process_card(card) for card in random_commanders]
+
     context = {
-        'commanders': []
+        'commanders': processed_commanders
     }
     return render(request, 'home/index.html', context)
 
@@ -36,8 +36,8 @@ async def fetch_legendary_creatures(request):
     return render(request, 'commanders.html', {'commanders': commanders})
 
 
-async def process_card(card_data):
-    card, created = await sync_to_async(Card.objects.get_or_create)(
+def process_card(card_data):
+    card, created = Card.objects.get_or_create(
         name=card_data['name'],
         defaults={
             'mana_cost': card_data.get('manaCost', ''),
@@ -49,3 +49,16 @@ async def process_card(card_data):
         }
     )
     return card
+
+
+def fetch_random_mtg_cards():
+    url = 'https://api.magicthegathering.io/v1/cards?supertypes=legendary&types=creature'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        all_cards = data['cards']
+        random_cards = random.sample(all_cards, min(len(all_cards), 9))
+        return random_cards
+    else:
+        return []
+
