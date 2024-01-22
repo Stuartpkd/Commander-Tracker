@@ -6,7 +6,8 @@
   <div class="row">
     {% for commander in commanders %}
     <div class="col-md-4 col-sm-6 mb-4">
-      <a href="{% url 'card_detail' %}">
+      <!-- Include the primary key of the commander in the URL -->
+      <a href="{% url 'card_detail' commander.id %}">
         <div class="card">
           <img
             src="{{ commander.image_url }}"

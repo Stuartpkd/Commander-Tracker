@@ -4,5 +4,5 @@ from home.models import Card
 
 class CardDetailView(DetailView):
     model = Card
-    template_name = 'home/card_detail.html'  # Replace with your template path
+    template_name = 'card_detail/card_detail.html'  # Replace with your template path
     context_object_name = 'card'
