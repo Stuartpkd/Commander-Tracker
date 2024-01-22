@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Category
+from .models import Category, SavedCard
+from home.models import Card
 
 
 @login_required
