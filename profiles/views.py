@@ -17,3 +17,16 @@ def create_category(request):
         return redirect('profile_page')  # Redirect to the profile page or category management page
 
     return render(request, 'profiles/create_category.html')
+
+
+def add_card_to_category(request, card_id):
+    if request.method == 'POST':
+        category_id = request.POST.get('category')
+        category = Category.objects.get(id=category_id, user=request.user)
+        card = Card.objects.get(id=card_id)
+        # Assuming SavedCard is the through model between UserProfile and Card
+        SavedCard.objects.create(user_profile=request.user.userprofile, card=card, category=category)
+        return redirect('card_detail', card_id=card_id)  # Redirect back to the card detail page
+
+    # Additional context or error handling as necessary
+
