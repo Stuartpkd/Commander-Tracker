@@ -6,7 +6,7 @@ from home.models import Card
 
 @login_required
 def user_profile(request):
-    
+
     user_categories = Category.objects.filter(user=request.user)
 
     context = {

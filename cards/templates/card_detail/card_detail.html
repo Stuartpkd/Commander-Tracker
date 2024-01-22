@@ -20,7 +20,7 @@
       {% csrf_token %}
       <label for="category">Add to category:</label>
       <select name="category" id="category">
-        {% for category in user_categories %}
+        {% for category in categories %}
         <option value="{{ category.id }}">{{ category.name }}</option>
         {% endfor %}
       </select>
