@@ -12,5 +12,23 @@
   {% if card.image_url %}
   <img src="{{ card.image_url }}" alt="{{ card.name }}" />
   {% endif %}
+
+  <!-- Form to Add Card to Category -->
+  {% if user.is_authenticated %}
+  <div class="add-to-category-form">
+    <form method="post" action="{% url 'add_card_to_category' card.id %}">
+      {% csrf_token %}
+      <label for="category">Add to category:</label>
+      <select name="category" id="category">
+        {% for category in user_categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+  {% else %}
+  <p><a href="{% url 'login' %}">Log in</a> to save this card to a category.</p>
+  {% endif %}
 </div>
 {% endblock %}
