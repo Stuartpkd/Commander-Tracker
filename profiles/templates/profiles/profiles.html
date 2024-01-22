@@ -40,6 +40,10 @@
 </div>
 {% endblock %} {% block scripts %}
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    filterCardsByCategory(); // Call this function initially to filter based on the default selection
+  });
+
   function filterCardsByCategory() {
     var selectedCategory = document.getElementById("categoryFilter").value;
     var cards = document.querySelectorAll(".commander-card");
@@ -47,7 +51,7 @@
     cards.forEach(function (card) {
       if (
         selectedCategory === "" ||
-        card.getAttribute("data-category") === selectedCategory
+        card.dataset.category === selectedCategory
       ) {
         card.style.display = "";
       } else {
@@ -56,4 +60,5 @@
     });
   }
 </script>
+
 {% endblock %}
