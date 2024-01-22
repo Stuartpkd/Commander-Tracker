@@ -1,21 +1,59 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
   <h1>User Profile</h1>
-
   <h2>Welcome, {{ user.get_full_name|default:user.username }}</h2>
+
+  <!-- Form to Create New Category -->
+  <div class="create-category-form">
+    <h3>Create New Category</h3>
+    <form method="post" action="{% url 'create_category' %}">
+      {% csrf_token %}
+      <label for="category_name">Category Name:</label>
+      <input type="text" name="category_name" id="category_name" required />
+      <button type="submit">Create</button>
+    </form>
+  </div>
+
+  <div class="category-selector">
+    <h3>Filter Commanders by Category</h3>
+    <select id="categoryFilter" onchange="filterCardsByCategory()">
+      <option value="">All Categories</option>
+      {% for category in user_categories %}
+      <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
 
   <div>
     <h3>Saved Commanders</h3>
-    {% if user.userprofile.saved_cards.all %}
-    <ul>
+    <ul id="commanderList">
       {% for card in user.userprofile.saved_cards.all %}
-      <li>{{ card.name }} - {{ card.type_line }}</li>
-
+      <li class="commander-card" data-category="{{ card.category.id }}">
+        {{ card.name }} - {{ card.type_line }}
+      </li>
       {% endfor %}
     </ul>
-    {% else %}
+    {% if not user.userprofile.saved_cards.all %}
     <p>You have not saved any commanders yet.</p>
     {% endif %}
   </div>
 </div>
+{% endblock %} {% block scripts %}
+<script>
+  function filterCardsByCategory() {
+    var selectedCategory = document.getElementById("categoryFilter").value;
+    var cards = document.querySelectorAll(".commander-card");
+
+    cards.forEach(function (card) {
+      if (
+        selectedCategory === "" ||
+        card.getAttribute("data-category") === selectedCategory
+      ) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
 {% endblock %}
