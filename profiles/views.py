@@ -32,7 +32,7 @@ def add_card_to_category(request, card_id):
         card = Card.objects.get(id=card_id)
         # Assuming SavedCard is the through model between UserProfile and Card
         SavedCard.objects.create(user_profile=request.user.userprofile, card=card, category=category)
-        return redirect('card_detail', card_id=card_id)  # Redirect back to the card detail page
+        return redirect('card_detail', pk=card_id)  # Redirect back to the card detail page
 
     # Additional context or error handling as necessary
 

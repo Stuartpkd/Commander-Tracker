@@ -3,5 +3,5 @@ from .views import CardDetailView
 
 urlpatterns = [
     # ... other URL patterns ...
-    path('card/<int:pk>/', CardDetailView.as_view(), name='card_detail'),
+    path('cards/card/<int:pk>/', CardDetailView.as_view(), name='card_detail'),
 ]
