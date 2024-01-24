@@ -6,12 +6,13 @@ from home.models import Card
 
 @login_required
 def user_profile(request):
-
     user_categories = Category.objects.filter(user=request.user)
+    saved_cards = SavedCard.objects.filter(user_profile=request.user.userprofile).select_related('category')
 
     context = {
         'user': request.user,
-        'user_categories': user_categories,  
+        'user_categories': user_categories,
+        'saved_cards': saved_cards,
     }
     return render(request, 'profiles/profiles.html', context)
 

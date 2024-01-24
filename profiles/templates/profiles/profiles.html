@@ -16,7 +16,7 @@
 
   <div class="category-selector">
     <h3>Filter Commanders by Category</h3>
-    <select id="categoryFilter" onchange="filterCardsByCategory()">
+    <select id="categoryFilter">
       <option value="">All Categories</option>
       {% for category in user_categories %}
       <option value="{{ category.id }}">{{ category.name }}</option>
@@ -27,9 +27,10 @@
   <div>
     <h3>Saved Commanders</h3>
     <ul id="commanderList">
-      {% for card in user.userprofile.saved_cards.all %}
+      {% for card in saved_cards %}
       <li class="commander-card" data-category="{{ card.category.id }}">
-        {{ card.name }} - {{ card.type_line }}
+        {{ card.card.name }} - {{ card.card.type_line }} ({{ card.category.name
+        }})
       </li>
       {% endfor %}
     </ul>
@@ -41,24 +42,26 @@
 {% endblock %} {% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    filterCardsByCategory(); // Call this function initially to filter based on the default selection
+    const categorySelector = document.getElementById("categoryFilter");
+    categorySelector.addEventListener("change", filterCardsByCategory);
+
+    function filterCardsByCategory() {
+      const selectedCategory = categorySelector.value;
+      console.log("Selected Category: ", selectedCategory);
+      const cards = document.querySelectorAll(".commander-card");
+
+      cards.forEach(function (card) {
+        const cardCategory = card.dataset.category;
+        console.log("Card Category: ", cardCategory);
+        card.style.display =
+          selectedCategory === "" || cardCategory === selectedCategory
+            ? ""
+            : "none";
+      });
+    }
+
+    // Initialize the filter on page load
+    filterCardsByCategory();
   });
-
-  function filterCardsByCategory() {
-    var selectedCategory = document.getElementById("categoryFilter").value;
-    var cards = document.querySelectorAll(".commander-card");
-
-    cards.forEach(function (card) {
-      if (
-        selectedCategory === "" ||
-        card.dataset.category === selectedCategory
-      ) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
 </script>
-
 {% endblock %}
